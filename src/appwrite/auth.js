@@ -10,6 +10,7 @@ export class AuthService{
     this.client
          .setEndpoint(config.appwriteUrl)
          .setProject(config.appwriteProjectId)
+    this.account = new Account(this.client);
   }
 
 
