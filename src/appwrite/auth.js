@@ -1,4 +1,4 @@
-import config from './config/config'
+import config from '../config/config'
 import {Client,Account,ID} from 'appwrite'
 
 export class AuthService{
@@ -39,22 +39,21 @@ export class AuthService{
     }
   }
   async getCurrentUser(){
-    try{
-        return await this.account.get();
-    }catch(error){
-        throw error;
-    }
-    return null;
+    try {
+      return await this.account.get();
+  } catch (error) {
+      console.log("Appwrite serive :: getCurrentUser :: error", error);
   }
-  async logout(){
-   try{
-     return await this.account.deleteSessions();
 
-   }
-   catch(error){
-    throw error;
-   }
+  return null;
+}
+  async logout(){
+    try {
+      await this.account.deleteSessions();
+  } catch (error) {
+      console.log("Appwrite serive :: logout :: error", error);
   }
+}
 }
 
 const authService = new AuthService();
