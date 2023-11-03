@@ -10,6 +10,7 @@ import Login from "./Login";
 import AuthLayout from "./AuthLayout";
 import Select from "./Select";
 import PostCard from "./PostCard";
+import PostForm from "./post-form/PostForm"
 import RTE from './RTE'
 
 
@@ -29,6 +30,8 @@ export{
     Select,
     PostCard,
     RTE,
+    PostForm,
+    
     
 
 }
