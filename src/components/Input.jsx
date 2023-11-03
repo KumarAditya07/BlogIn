@@ -9,7 +9,8 @@ const Input = React.forwardRef( function Input({
     label,
     type = "text",
     className = "",
-    ...props  //we use this if we want to add extra props rather than above it will make copy and add
+    ...props  
+ //we use this if we want to add extra props rather than above it will make copy and add
  
 }, ref){
     const id = useId()
