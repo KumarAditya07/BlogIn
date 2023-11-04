@@ -1,4 +1,4 @@
-import config from './config/config'
+import config from '../config/config'
 import {Client,ID,Databases,Storage,Query} from 'appwrite'
 
 export class Service{
@@ -31,7 +31,7 @@ export class Service{
         )
         
     } catch (error) {
-        throw error;
+        console.log("Appwrite serive :: createPost :: error", error);
     }
   }
   async updatePost(slug,{title,content,featureImage,status}){
@@ -49,7 +49,7 @@ export class Service{
 
         )
     } catch (error) {
-        throw error;
+        console.log("Appwrite serive :: updatePost :: error", error);
     }
   }
   async deletePost(slug){
@@ -81,18 +81,21 @@ export class Service{
       }
   }
 
-  async getPosts(queries = [Query.equal("status","active")]){
+  async getPosts(queries = [Query.equal("status", "active")]){
     try {
-      await this.database.getDocument(
-          config.appwriteDatabaseId,
-          config.appwriteCollectionId,
-          queries,
-      )
+        return await this.databases.listDocuments(
+            config.appwriteDatabaseId,
+            config.appwriteCollectionId,
+            queries,
+            
+
+        )
     } catch (error) {
-      console.log("Appwrite service :: getPosts :: error ",error);
-          return false;
+        console.log("Appwrite serive :: getPosts :: error", error);
+        return false
     }
 }
+
 
 async uploadFile(file){
     try {
