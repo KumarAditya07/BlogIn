@@ -5,6 +5,7 @@ import appwriteService from "../../appwrite/configr";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
+
 export default function PostForm({ post }) {
     const { register, handleSubmit, watch, setValue, control, getValues } = useForm({
         defaultValues: {
@@ -17,18 +18,19 @@ export default function PostForm({ post }) {
 
     const navigate = useNavigate();
     const userData = useSelector((state) => state.auth.userData);
+      console.log('id :  ',userData.$id);
 
     const submit = async (data) => {
         if (post) {
             const file = data.image[0] ? await appwriteService.uploadFile(data.image[0]) : null;
 
             if (file) {
-                appwriteService.deleteFile(post.featuredImage);
+                appwriteService.deleteFile(post.featureImage);
             }
 
             const dbPost = await appwriteService.updatePost(post.$id, {
                 ...data,
-                featuredImage: file ? file.$id : undefined,
+                featureImage: file ? file.$id : undefined,
             });
 
             if (dbPost) {
@@ -39,7 +41,7 @@ export default function PostForm({ post }) {
 
             if (file) {
                 const fileId = file.$id;
-                data.featuredImage = fileId;
+                data.featureImage = fileId;
                 const dbPost = await appwriteService.createPost({ ...data, userId: userData.$id });
 
                 if (dbPost) {
@@ -54,7 +56,7 @@ export default function PostForm({ post }) {
             return value
                 .trim()
                 .toLowerCase()
-                .replace(/[^a-zA-Z\d\s]+/g, "-")
+                // .replace(/[^a-zA-Z\d\s]+/g, "-")
                 .replace(/\s/g, "-");
 
         return "";
@@ -101,7 +103,7 @@ export default function PostForm({ post }) {
                 {post && (
                     <div className="w-full mb-4">
                         <img
-                            src={appwriteService.getFilePreview(post.featuredImage)}
+                            src={appwriteService.getFilePreview(post.featureImage)}
                             alt={post.title}
                             className="rounded-lg"
                         />
